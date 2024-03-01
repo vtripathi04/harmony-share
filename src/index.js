@@ -10,7 +10,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 
 app.use('/sender', express.static(path.join(__dirname, '..', 'public')));
-app.use('/receiver', express.static(path.join(__dirname, '..', 'public')));
+app.use('/receiver/receivefile', express.static(path.join(__dirname, '..', 'public')));
 app.use(express.json());
 app.use(express.urlencoded({extended:true, limit:"16kb"}))
 
@@ -21,8 +21,14 @@ app.get('/sender/sharefile', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'senderpage.html'));
 })
 
-app.get('/receiver/receivefile', (req, res) => {
+app.get('/receiver/receivefile/:roomName', (req, res) => {
+
+    const {roomName} = req.params;
+    console.log(roomName);
     res.sendFile(path.join(__dirname, '..', 'public', 'receiverpage.html'));
+
+    
+
 })
 
 
