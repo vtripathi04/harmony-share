@@ -13,6 +13,16 @@ let initializeSender = (roomName) => {
         + '/'
     );
 
+        
+    return new Promise((resolve) => {
+        senderSocket.onopen = () => {
+            resolve();
+        };
+    });
+};
+
+let StartSenderEventHandler = () => 
+{
     peerSender = new SimplePeer({
         initiator: true,
         config: {
@@ -26,52 +36,52 @@ let initializeSender = (roomName) => {
         trickle: false
     });
 
-    
     peerSender.on('signal', data => {
         console.log(data);
         document.getElementById("offers").value += JSON.stringify(data);
         
-        console.log(data);
         senderSocket.send(JSON.stringify({
             'message': JSON.stringify(data),
             'receiver_channel_name': "receiver"
         }));
     });
-
     peerSender.on('connect', () => {
         console.log('Sender: Connection established');
         peerSender.send('Hello from sender!');
     });
 
-    
-
-    
-    return new Promise((resolve) => {
-        senderSocket.onopen = () => {
-            resolve();
-        };
-    });
-};
+        
+}
 
 
 let startSender = async (roomName) => {
     
     await initializeSender(roomName);
 
-    
-    let some = () => {
-        console.log(JSON.parse(document.getElementById("offers").value));
-        peerSender.signal(document.getElementById("offers").value);
-    };
-
     senderSocket.onmessage = function(e) {
-        const data = JSON.parse(e.data);
-        console.log(data);
+        let data = JSON.parse(e.data);
+        
+        if (data["message"] == roomName)
+        {
+            StartSenderEventHandler();
+        }
+        else
+        {
+            console.log(data);
+            let das = JSON.parse(data["message"]);
+            peerSender.signal(das);
+        }
+    
     };
 
 
-    document.getElementById('accept-button').addEventListener('click', some);
 };
 
 
+let some = () => {
+    console.log(JSON.parse(document.getElementById("offers").value));
+    peerSender.signal(document.getElementById("offers").value);
+};
+
+document.getElementById('accept-button').addEventListener('click', some);
 
