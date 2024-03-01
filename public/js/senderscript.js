@@ -1,23 +1,21 @@
+
 const fileInput = document.getElementById('fileInput');
 const recieverDiv = document.getElementById('reciever-link-content')
 
 const generateRecieverURL = (roomName) => {
-
-    const receiverURL = `${window.location.host}/receiver/receivefile/${getRoomName(roomName)}`
+    roomName = getRoomName(roomName)
+    const receiverURL = `${window.location.host}/receiver/receivefile/${roomName}`
+    startSender(roomName);
     return receiverURL;
 }
 
 
-const generateSenderURL = (roomName) => {
-    const senderURL = `ws://${window.location.host}/ws/chat/${roomName}/sender/`
-    return senderURL
-}
-
 const getRoomName = (receiverURL) => {
-    const splitstring = receiverURL.split("/")
-    const roomName = splitstring[splitstring.length-1];
-    const encodedRoomName = encodeURIComponent(roomName);
-    return encodedRoomName;
+    const processedName = receiverURL.replace(/ /g, '_');
+    const finalName = processedName.split('.')[0];
+  
+    return finalName;
+  
 }
 
 
@@ -27,9 +25,9 @@ fileInput.addEventListener('change', function() {
     alert("Created Room with name : " + fileName);
 
     const receiverURL = generateRecieverURL(fileName);
-    const senderURL = generateSenderURL(fileName);
+    // const senderURL = generateSenderURL(fileName);
 
-    console.log(getRoomName(receiverURL));
+    // console.log(getRoomName(receiverURL));
 
     recieverDiv.innerHTML = `<p>Please Share this Link With the Reciever : ${receiverURL} </p>`
 

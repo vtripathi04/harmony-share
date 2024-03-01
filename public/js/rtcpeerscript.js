@@ -1,48 +1,77 @@
-
-const peerSender = new SimplePeer({
-  initiator: true, 
-  config: {
-    iceServers: [
-      { urls: "stun:stun1.l.google.com:19302"},
-      { urls: "stun:stun2.l.google.com:19302"},
-      { urls: "stun:stun3.l.google.com:19302"},
-      { urls: "stun:stun4.l.google.com:19302"},
-    ] },
-    trickle:false
-});
-
-peerSender.on('signal', data => {
-    // Send the offer to the receiver
-    // (You'll need to implement a method to send this offer to the receiver)
-    // peerSender.
-    console.log(data)
-    document.getElementById("offers").value += JSON.stringify(data)
-    // sendOfferToReceiver(data);
-});
-
-peerSender.on('connect', () => {
-    console.log('Sender: Connection established');
-    // You can start sending data here
-    peerSender.send('Hello from sender!');
-});
-
-// peer.on('signal', data => {
-//     console.log('Sender Signal:', data);
-//     document.getElementById("offers").value += JSON.stringify(data)
-// });
-
-// // The peer.signal is for sending data to other peer
-// peer.signal(data);
+let senderSocket;
+let peerSender;
 
 
-// document.getElementById('fileInput').addEventListener('change', () => {
-//     let data = 'Hello from sender!';
-//     peer.send(data);
-// });
+let initializeSender = (roomName) => {
+    senderSocket = new WebSocket(
+        'ws://'
+        + '10.7.16.253:8000'
+        + '/ws/chat/'
+        + roomName
+        + '/'
+        + "sender"
+        + '/'
+    );
 
-let some = () => {
-    console.log(JSON.parse(document.getElementById("offers").value))
-    peerSender.signal(document.getElementById("offers").value)
-}
+    peerSender = new SimplePeer({
+        initiator: true,
+        config: {
+            iceServers: [
+                { urls: "stun:stun1.l.google.com:19302" },
+                { urls: "stun:stun2.l.google.com:19302" },
+                { urls: "stun:stun3.l.google.com:19302" },
+                { urls: "stun:stun4.l.google.com:19302" },
+            ]
+        },
+        trickle: false
+    });
 
-document.getElementById('accept-button').addEventListener('click', some)
+    
+    peerSender.on('signal', data => {
+        console.log(data);
+        document.getElementById("offers").value += JSON.stringify(data);
+        
+        console.log(data);
+        senderSocket.send(JSON.stringify({
+            'message': JSON.stringify(data),
+            'receiver_channel_name': "receiver"
+        }));
+    });
+
+    peerSender.on('connect', () => {
+        console.log('Sender: Connection established');
+        peerSender.send('Hello from sender!');
+    });
+
+    
+
+    
+    return new Promise((resolve) => {
+        senderSocket.onopen = () => {
+            resolve();
+        };
+    });
+};
+
+
+let startSender = async (roomName) => {
+    
+    await initializeSender(roomName);
+
+    
+    let some = () => {
+        console.log(JSON.parse(document.getElementById("offers").value));
+        peerSender.signal(document.getElementById("offers").value);
+    };
+
+    senderSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        console.log(data);
+    };
+
+
+    document.getElementById('accept-button').addEventListener('click', some);
+};
+
+
+
