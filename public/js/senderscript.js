@@ -3,7 +3,7 @@ const recieverDiv = document.getElementById('reciever-link-content')
 
 const generateRecieverURL = (roomName) => {
 
-    const receiverURL = `${window.location.host}/receiver/receivefile/${roomName}`
+    const receiverURL = `${window.location.host}/receiver/receivefile/${getRoomName(roomName)}`
     return receiverURL;
 }
 
