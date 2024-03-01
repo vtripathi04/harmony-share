@@ -1,5 +1,8 @@
+
+
 let senderSocket;
 let peerSender;
+let fileInputs = document.getElementById('fileInput');
 
 
 let initializeSender = (roomName) => {
@@ -13,7 +16,6 @@ let initializeSender = (roomName) => {
         + '/'
     );
 
-        
     return new Promise((resolve) => {
         senderSocket.onopen = () => {
             resolve();
@@ -21,8 +23,7 @@ let initializeSender = (roomName) => {
     });
 };
 
-let StartSenderEventHandler = () => 
-{
+let StartSenderEventHandler = () => {
     peerSender = new SimplePeer({
         initiator: true,
         config: {
@@ -39,49 +40,73 @@ let StartSenderEventHandler = () =>
     peerSender.on('signal', data => {
         console.log(data);
         document.getElementById("offers").value += JSON.stringify(data);
-        
+
         senderSocket.send(JSON.stringify({
             'message': JSON.stringify(data),
             'receiver_channel_name': "receiver"
         }));
     });
+
     peerSender.on('connect', () => {
         console.log('Sender: Connection established');
-        peerSender.send('Hello from sender!');
+
+        peerSender.send(String(fileInputs.files[0].name));
+        sendFileChunks();
     });
-
-        
-}
-
+};
 
 let startSender = async (roomName) => {
-    
     await initializeSender(roomName);
 
-    senderSocket.onmessage = function(e) {
+    senderSocket.onmessage = function (e) {
         let data = JSON.parse(e.data);
-        
-        if (data["message"] == roomName)
-        {
+
+        if (data["message"] == roomName) {
             StartSenderEventHandler();
-        }
-        else
-        {
+        } else {
             console.log(data);
             let das = JSON.parse(data["message"]);
             peerSender.signal(das);
         }
-    
+    };
+};
+
+let sendFileChunks = () => {
+    const file = fileInputs.files[0];
+
+    if (!file) {
+        console.error('No file selected.');
+        return;
+    }
+
+    const chunkSize = 16 * 1024; // 16 KB
+    const totalChunks = Math.ceil(file.size / chunkSize);
+    let currentChunk = 0;
+
+    console.log(`Sending ${totalChunks} chunks`);
+
+    const reader = new FileReader();
+
+    reader.onload = function () {
+        const chunk = new Uint8Array(reader.result);
+
+        peerSender.send(chunk);
+
+        currentChunk++;
+
+        if (currentChunk < totalChunks) {
+            readNextChunk();
+        }
     };
 
+    function readNextChunk() {
+        const start = currentChunk * chunkSize;
+        const end = Math.min((currentChunk + 1) * chunkSize, file.size);
+        const blob = file.slice(start, end);
+        reader.readAsArrayBuffer(blob);
+    }
 
+    readNextChunk();
 };
 
-
-let some = () => {
-    console.log(JSON.parse(document.getElementById("offers").value));
-    peerSender.signal(document.getElementById("offers").value);
-};
-
-document.getElementById('accept-button').addEventListener('click', some);
 

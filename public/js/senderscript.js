@@ -11,7 +11,7 @@ const generateRecieverURL = (roomName) => {
 
 
 const getRoomName = (receiverURL) => {
-    const processedName = receiverURL.replace(/ /g, '_');
+    const processedName = receiverURL.replace(/[ -]/g, '_');
     const finalName = processedName.split('.')[0];
   
     return finalName;

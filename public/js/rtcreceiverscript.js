@@ -1,54 +1,66 @@
+
+
 let receiverSocket;
 let peerReceiver;
+let receivedChunksBlob = new Blob();
+let i = 0;
+let file_name;
 
 let initializeReceiver = (roomName) => {
-  receiverSocket = new WebSocket(
-      'ws://'
-      + '10.7.16.253:8000'
-      + '/ws/chat/'
-      + roomName
-      + '/'
-      + "receiver"
-      + '/'
-  );
-    
-  return new Promise((resolve) => {
-      receiverSocket.onopen = () => {
-          resolve();
-      };
-  });
+    receiverSocket = new WebSocket(
+        'ws://'
+        + '10.7.16.253:8000'
+        + '/ws/chat/'
+        + roomName
+        + '/'
+        + "receiver"
+        + '/'
+    );
+
+    return new Promise((resolve) => {
+        receiverSocket.onopen = () => {
+            resolve();
+        };
+    });
 };
 
 let StartReceiverEventHandler = () => {
-     peerReceiver = new SimplePeer({
+    peerReceiver = new SimplePeer({
         config: {
             iceServers: [
-            { urls: "stun:stun1.l.google.com:19302"},
-            { urls: "stun:stun2.l.google.com:19302"},
-            { urls: "stun:stun3.l.google.com:19302"},
-            { urls: "stun:stun4.l.google.com:19302"},
-          ],
-          trickle: false
+                { urls: "stun:stun1.l.google.com:19302" },
+                { urls: "stun:stun2.l.google.com:19302" },
+                { urls: "stun:stun3.l.google.com:19302" },
+                { urls: "stun:stun4.l.google.com:19302" },
+            ],
+            trickle: false
         }
-    }
-    );
+    });
 
     peerReceiver.on('signal', data => {
         console.log(data);
-        if (data["type"] == "answer")
+        // if (data["type"] === "answer") {
+            receiverSocket.send(JSON.stringify({
+                'message': JSON.stringify(data),
+                'receiver_channel_name': "sender"
+            }));
+        // }
+    });
+
+    peerReceiver.on('data', chunk => {
+        
+        if (i == 0)
         {
-          receiverSocket.send(JSON.stringify({
-            'message': JSON.stringify(data),
-            'receiver_channel_name': "sender"
-        }));
+          file_name = "" + chunk;
         }
-    })
-
-    peerReceiver.on('data', data => {
-        console.log('got a message from peer1: ' + data)
-    })
-
-    }
+        else
+        {
+          receivedChunksBlob = new Blob([receivedChunksBlob, chunk]);
+        }
+        i = i + 1
+        console.log("Recieved Chunk " + i)
+    });
+};
 
 let startReceiver = async (roomName) => {
     
@@ -63,13 +75,7 @@ let startReceiver = async (roomName) => {
         }
     
     };
-    let some = () => {
-      StartReceiverEventHandler();
-      peerReceiver.signal(document.getElementById("answers").value)
-    }
 
-
-    document.getElementById('answer-button').addEventListener('click', some)
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -78,3 +84,13 @@ document.addEventListener('DOMContentLoaded', function() {
   const roomName = segments[segments.length - 1];
   startReceiver(roomName);
 });
+
+document.getElementById('download-button').addEventListener('click', () => {
+  const downloadLink = document.createElement('a');
+  downloadLink.href = URL.createObjectURL(receivedChunksBlob);
+  downloadLink.download = file_name;
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
+  document.body.removeChild(downloadLink);
+});
+
