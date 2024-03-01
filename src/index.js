@@ -11,13 +11,11 @@ const PORT = 8000;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 
-app.use(express.static(path.join(__dirname, '..', 'public')));
-
-
+app.use('/sender', express.static(path.join(__dirname, '..', 'public')));
+app.use('/reciever', express.static(path.join(__dirname, '..', 'public')));
 app.use(express.json());
 app.use(express.urlencoded({extended:true, limit:"16kb"}))
-app.use(express.json());
-app.use(express.urlencoded({extended:true, limit:"16kb"}))
+
 
 console.log(path.join(__dirname, '..', 'public', 'senderpage.html'));
 
