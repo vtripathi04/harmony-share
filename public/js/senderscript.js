@@ -15,8 +15,9 @@ const generateSenderURL = (roomName) => {
 
 const getRoomName = (receiverURL) => {
     const splitstring = receiverURL.split("/")
-    return splitstring[splitstring.length-1];
-
+    const roomName = splitstring[splitstring.length-1];
+    const encodedRoomName = encodeURIComponent(roomName);
+    return encodedRoomName;
 }
 
 
@@ -28,6 +29,7 @@ fileInput.addEventListener('change', function() {
     const receiverURL = generateRecieverURL(fileName);
     const senderURL = generateSenderURL(fileName);
 
+    console.log(getRoomName(receiverURL));
 
     recieverDiv.innerHTML = `<p>Please Share this Link With the Reciever : ${receiverURL} </p>`
 
