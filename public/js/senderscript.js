@@ -3,7 +3,7 @@ const recieverDiv = document.getElementById('reciever-link-content')
 
 const generateRecieverURL = (roomName) => {
 
-    const receiverURL = `ws://${window.location.host}/ws/chat/${roomName}/reciever/`
+    const receiverURL = `${window.location.host}/receiver/receivefile/${roomName}`
     return receiverURL;
 }
 
@@ -11,6 +11,12 @@ const generateRecieverURL = (roomName) => {
 const generateSenderURL = (roomName) => {
     const senderURL = `ws://${window.location.host}/ws/chat/${roomName}/sender/`
     return senderURL
+}
+
+const getRoomName = (receiverURL) => {
+    const splitstring = receiverURL.split("/")
+    return splitstring[splitstring.length-1];
+
 }
 
 
