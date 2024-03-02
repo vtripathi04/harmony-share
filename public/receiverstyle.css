@@ -1,45 +1,241 @@
-*{
-    padding: 0px;
-    margin: 0px;
+:root
+{
+    --white: #ffffff;
+    --dark-purple: #45276b;
+    --bright-purple: #d016f6;
+    --orange: #f2b76d;
 }
 
+/* 
+body
+{
+    margin: 0;                  
+    padding: 0;
+    font-family: "Roboto", sans-serif !important;
+    height: 100vh;
+    background: linear-gradient(135deg, #3f51b5, #2196f3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+} 
+*/
 
-#header{
+body
+{
+    height: 100vh;
     width: 100vw;
-    height: 80px;
-    background: black;
+    background: linear-gradient(135deg, var(--orange), var(--bright-purple));
+    margin: 0rem;
+    overflow: hidden;
+    font-family: "Comfortaa";
+}
+
+.navbar
+{
+    min-height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    /* margin-top: 8px; */
+    user-select: none;
+}
+
+#title-container
+{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #fff;
+}
+
+#title
+{
+    font-size: 2.5rem;
+    font-weight: bolder;
+    margin: 12px;
+}
+
+#tagline
+{
+    position: relative;
+    left: 18.3%;
+    color: #fff;
+    font-size: 1.2rem;
+    margin-top: 5px;
+}
+
+main
+{
+    font-family: "Comfortaa";
+    /* margin-top: -50px; */
+    height: 100vh;
+    width: auto;
+    position: relative;
+    display: flex;
+    bottom: 10%;
+    z-index: 1;
+    overflow: hidden;
+    scroll-behavior: smooth;
+    object-fit: cover;
+}
+
+.left-container
+{
+    background-color: var(--dark-purple);
+    padding: 20px;
+    border-radius: 5%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     text-align: center;
+    width: 22rem;
+    height: 22rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 31%;
+    transform: translate(-50%, -50%);
 }
 
-#header p{
-    font-size: 30px;
-    color: white;
-    padding-top: 20px;
+h1
+{
+    color: #fff;
+    font-size: 24px;
+    margin-bottom: 5px;
 }
 
-
-#main-content{
-    font-weight: 700;
-    font-size: 60px;
-    text-align: center;
-    margin-top: 30px;
+.file-upload-container
+{
+    margin-bottom: 20px;
+    font-size: 1.75rem;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+    position: relative;
+    bottom: 10%;
 }
 
-
-button{
-    margin-top: 20px;
+.file-upload
+{
+    position: relative;
     width: 100px;
-    height: 50px;
-    
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0.7);
+    /* background: linear-gradient(135deg, var(--orange), var(--bright-purple)); */
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform, opacity, background-color;
+    transition-timing-function: ease;
+    transition-duration: 400ms;
 }
 
-#downloaded-file-content{
-    font-size: 20px;
-    margin-top: 20px;
-    text-align: center;
+.file-upload:hover
+{
+    animation: glow 1s infinite alternate;
+    opacity: 1;
+    transform: scale(1.1);
+}
+.file-upload:active
+{
+    transform: scale(0.9);
 }
 
-#offer-answer-content{
+
+@keyframes glow 
+{
+    0%
+    {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+    100%
+    {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.6);
+    }
+}
+
+.file-upload-label
+{
+    display: none;
+}
+
+.file-upload-icon
+{
+    font-size: 24px;
+    color: var(--white);
+}
+
+.right-container
+{
+    position: absolute;
+    top: 50%;
+    left: 66%;
+    transform: translate(-50%, -37%);
+    color: #fff;
+    width: 22rem;
+    height: 22rem;
+    padding: 20px;
+    border-radius: 5%;
+    background-color: transparent;
+    box-shadow: none;
+    text-align: left;
+    align-items: center;
+}
+
+.right-container h1
+{
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.right-container p
+{
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+
+.download-container
+{
+    background-color: var(--dark-purple);
+    padding: 20px;
+    border-radius: 5%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     text-align: center;
-    margin-top: 20px;
+    width: 14.8rem;
+    height: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 31%;
+    transform: translate(-50%, -50%);
+}
+
+.download-container p
+{
+    font-size: 1.3rem;
+    margin-bottom: 45px;
+    color: #fff;
+
+}
+
+.download-button{
+    background-color: ff8500;
+    width: 14.8;
+    height: 1.7rem;
+}
+
+
+
+.download-text{
+    font-family:"Comfortaa";
 }

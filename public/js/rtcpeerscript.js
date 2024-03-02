@@ -2,7 +2,7 @@
 
 let senderSocket;
 let peerSender;
-let fileInputs = document.getElementById('fileInput');
+let fileInputs = document.getElementById('file-upload');
 
 
 let initializeSender = (roomName) => {
@@ -39,7 +39,7 @@ let StartSenderEventHandler = () => {
 
     peerSender.on('signal', data => {
         console.log(data);
-        document.getElementById("offers").value += JSON.stringify(data);
+        // document.getElementById("offers").value += JSON.stringify(data);
 
         senderSocket.send(JSON.stringify({
             'message': JSON.stringify(data),

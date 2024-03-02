@@ -1,36 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download Files - Reciever</title>
-    <link rel="stylesheet" href="receiverstyle.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+        <title>Harmony Share</title>
+
+        <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+        <script src="https://kit.fontawesome.com/eca0eefe21.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="receiverstyle.css">
+    </head>
 <body>
 
-    <div id="header">
-        <p>Coffee Share</p>
+    <header>
+        <nav class="navbar">        
+            <div id="title-container">
+                <div id="title"> <i class="fa-solid fa-people-arrows"></i> Harmony Share  </div>
+                <div id="tagline"> Share with Harmony </div>
+            </div>
+        </nav>
+    </header>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="download-container">
+        <div class="main-content">
+            <p>Download File Below !</p>
+            <br>
+            <br>
+            <button class="download-button" type="button" class="btn btn-secondary btn-sm"> <div class=" download-text "> Download </div> </button>
+        </div>
     </div>
 
-    <div id="main-content">
-        <p>Download File Below !</p>
-        <button id="download-button">Download</button>
+    <div class="right-container">
+        <h1>Receiving files from peer</h1>
+        <p>You are about to start a secure transfer, directly from a peer. Click download to start receiving the file.</p>
     </div>
 
-    <div id="offer-answer-content">
-        <textarea name="answers" id="answers" cols="30" rows="10"></textarea>
-        <button id="answer-button">Generate Answer</button>
-    </div>
-    
-    <!-- <div id="downloaded-file-content"> </div> -->
-
-    <!-- <div id="download-link-content"> -->
-
-    <!-- </div> -->
 
     <script src="https://cdn.jsdelivr.net/npm/simple-peer@9.5.0/simplepeer.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.8/download.min.js"></script>
     <script src="js/rtcreceiverscript.js"></script>
+
     
 </body>
 </html>

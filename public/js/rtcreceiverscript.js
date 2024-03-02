@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
   startReceiver(roomName);
 });
 
-document.getElementById('download-button').addEventListener('click', () => {
+document.querySelector('.download-button').addEventListener('click', () => {
   const downloadLink = document.createElement('a');
   downloadLink.href = URL.createObjectURL(receivedChunksBlob);
   downloadLink.download = file_name;

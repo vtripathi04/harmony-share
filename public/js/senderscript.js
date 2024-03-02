@@ -1,6 +1,25 @@
 
-const fileInput = document.getElementById('fileInput');
-const recieverDiv = document.getElementById('reciever-link-content')
+const fileInput = document.getElementById('file-upload');
+const leftcont = document.querySelector('.left-container')
+
+const addLinkForReceiver = (receiverURL) => {
+    // leftcont.innerHTML = ""
+
+    const infodiv = document.querySelector('.file-upload-container')
+    infodiv.innerHTML = "Share this Link with a Receiver !";
+
+    document.querySelector('.file-upload').remove();
+
+    const recieverlinkp = document.createElement('p');
+    recieverlinkp.id = "rec-link";
+    const linktext = document.createTextNode(receiverURL);
+    recieverlinkp.appendChild(linktext);
+
+    leftcont.appendChild(recieverlinkp);
+
+
+}
+
 
 const generateRecieverURL = (roomName) => {
     roomName = getRoomName(roomName)
@@ -13,7 +32,6 @@ const generateRecieverURL = (roomName) => {
 const getRoomName = (receiverURL) => {
     const processedName = receiverURL.replace(/[ -]/g, '_');
     const finalName = processedName.split('.')[0];
-  
     return finalName;
   
 }
@@ -29,7 +47,8 @@ fileInput.addEventListener('change', function() {
 
     // console.log(getRoomName(receiverURL));
 
-    recieverDiv.innerHTML = `<p>Please Share this Link With the Reciever : ${receiverURL} </p>`
+    addLinkForReceiver(receiverURL);
+    // recieverDiv.innerHTML = `<p>Please Share this Link With the Reciever : ${receiverURL} </p>`
 
     const formData = new FormData();
     formData.append('file', fileInput);

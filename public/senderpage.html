@@ -1,35 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send Files - Sender</title>
-    <link rel="stylesheet" href="senderstyle.css">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+        <title>Harmony Share</title>
 
-    <div id="header">
-        <p>Coffee Share</p>
-    </div>
+        <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+        <script src="https://kit.fontawesome.com/eca0eefe21.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="Senderstyle.css">
+    </head>
 
-    <div id="main-content"> 
-        <p>Select a file to send !</p>
-        <input type="file" id="fileInput">
-    </div>
+    <body>
+        <header>
+            <nav class="navbar">        
+                <div id="title-container">
+                    <div id="title"> <i class="fa-solid fa-people-arrows"></i> Harmony Share  </div>
+                    <div id="tagline"> Share with Harmony </div>
+                </div>
+            </nav>
+        </header>
 
-    <div id="offer-answer-content">
-        <textarea name="offer" id="offers" cols="30" rows="10"></textarea>
-        <button id="accept-button">Accept Answer</button>
-    </div>
+        <main>
+            <div class="left-container">
+            
+                <div class="file-upload-container"> Browse Files to Share </div>
+                <div class="file-upload" onclick="document.getElementById('file-upload').click()">
+                <span class="file-upload-icon">&#43;</span>
+                </div>
+                
+                <input type="file" id="file-upload" class="file-upload-input" style="display: none;">
+            </div>
 
-    <div id="reciever-link-content">
+            <div class="right-container">
+                <h1>Share files directly from your device to anywhere</h1>
+                <p>Send files of any size directly from your device without ever storing anything online.</p>
+            </div>
 
-    </div>
+        </main>
 
-    <script src="js/senderscript.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-peer@9.5.0/simplepeer.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.8/download.min.js"></script>
-    <script src="js/rtcpeerscript.js"></script>
-    
-</body>
+        <script src="js/senderscript.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-peer@9.5.0/simplepeer.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.8/download.min.js"></script>
+        <script src="js/rtcpeerscript.js"></script>
+
+    </body>
 </html>
