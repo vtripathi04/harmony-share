@@ -10,20 +10,23 @@ const addLinkForReceiver = (receiverURL) => {
 
     document.querySelector('.file-upload').remove();
 
-    const recieverlinkp = document.createElement('p');
-    recieverlinkp.id = "rec-link";
+    const division = document.createElement('div');
+    division.id = "rec-link-div";
+    const recieverlinkp = document.createElement('a');
     const linktext = document.createTextNode(receiverURL);
+    recieverlinkp.href = receiverURL;
+    recieverlinkp.target = "_blank"; 
+    recieverlinkp.style.color = "white";
     recieverlinkp.appendChild(linktext);
-
-    leftcont.appendChild(recieverlinkp);
-
+    division.appendChild(recieverlinkp);
+    leftcont.appendChild(division);
 
 }
 
 
 const generateRecieverURL = (roomName) => {
     roomName = getRoomName(roomName)
-    const receiverURL = `${window.location.host}/receiver/receivefile/${roomName}`
+    const receiverURL = `http://${window.location.host}/receiver/receivefile/${roomName}`
     startSender(roomName);
     return receiverURL;
 }

@@ -98,6 +98,8 @@ main
     top: 50%;
     left: 31%;
     transform: translate(-50%, -50%);
+    word-wrap: break-word;
+
 }
 
 h1
@@ -200,7 +202,13 @@ h1
     color: #fff;
 }
 
-#rec-link{
+
+/* #rec-link{
     color: white;
     font-size: 85%;
+    max-width: 100%;
+} */
+#rec-link-div {
+    color: white;
+    max-width: 100%;
 }
