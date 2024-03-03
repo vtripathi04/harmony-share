@@ -8,7 +8,7 @@ let fileInputs = document.getElementById('file-upload');
 let initializeSender = (roomName) => {
     senderSocket = new WebSocket(
         'ws://'
-        + '10.7.16.253:8000'
+        + (window.location.host).replace(":8001",":8000")
         + '/ws/chat/'
         + roomName
         + '/'

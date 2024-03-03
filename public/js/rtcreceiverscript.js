@@ -9,7 +9,7 @@ let file_name;
 let initializeReceiver = (roomName) => {
     receiverSocket = new WebSocket(
         'ws://'
-        + '10.7.16.253:8000'
+        + (window.location.host).replace(":8001",":8000")
         + '/ws/chat/'
         + roomName
         + '/'
@@ -39,12 +39,10 @@ let StartReceiverEventHandler = () => {
 
     peerReceiver.on('signal', data => {
         console.log(data);
-        // if (data["type"] === "answer") {
             receiverSocket.send(JSON.stringify({
                 'message': JSON.stringify(data),
                 'receiver_channel_name': "sender"
             }));
-        // }
     });
 
     peerReceiver.on('data', chunk => {
@@ -92,5 +90,6 @@ document.querySelector('.download-button').addEventListener('click', () => {
   document.body.appendChild(downloadLink);
   downloadLink.click();
   document.body.removeChild(downloadLink);
+  peerReceiver.destroy();
 });
 

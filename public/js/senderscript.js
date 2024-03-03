@@ -1,7 +1,6 @@
 
 const fileInput = document.getElementById('file-upload');
 const leftcont = document.querySelector('.left-container')
-
 const addLinkForReceiver = (receiverURL) => {
     // leftcont.innerHTML = ""
 
